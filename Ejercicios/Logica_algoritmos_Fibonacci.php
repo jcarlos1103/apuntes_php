@@ -22,7 +22,8 @@
 	//print_r ($miarray[ "10" ]);
 	
 	// Para mostrar todo nuestro array.
+	echo "<PRE>";
 	print_r ($miarray);
-	echo"<br>";
+	echo "<\PRE>";
 
 ?>
