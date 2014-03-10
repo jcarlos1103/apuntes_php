@@ -3,7 +3,7 @@
 	// Esta siempre debe dar como resultado el conjunto de billetes y monedas más alto.
 	
 	// Cantidad a cambiar.
-	$total[] = 1259.20;	// la guardo en un array para poder ir cambiando el valor.
+	$total[] = 1274.40;	// la guardo en un array para poder ir cambiando el valor.
 	$contador = 1;	// Contador para el primer while
 	
 	
@@ -16,6 +16,7 @@
 	$moneda[] = 20;
 	$moneda[] = 10;
 	$moneda[] = 5;
+	$moneda[] = 2;
 	$moneda[] = 1;
 
 	// Para contar las posiciones que tenemos en el array monedas. El cambio existente.
@@ -67,43 +68,43 @@
 	*/
 	
 	
-	$cont = 1;
+	$cont = 0;
 	
-	$m_decimal[] = 0.50;
-	$m_decimal[] = 0.20;
-	$m_decimal[] = 0.10;
-	$m_decimal[] = 0.05;
-	$m_decimal[] = 0.02;
-	$m_decimal[] = 0.01;
+	// Asigno el formato a todos los datos del array para tenerlo controlado ya que actua diferente que con los enteros.
+	$m_decimal[] = number_format(0.50, 2, ".", ",");
+	$m_decimal[] = number_format(0.20, 2, ".", ",");
+	$m_decimal[] = number_format(0.10, 2, ".", ",");
+	$m_decimal[] = number_format(0.05, 2, ".", ",");
+	$m_decimal[] = number_format(0.02, 2, ".", ",");
+	$m_decimal[] = number_format(0.01, 2, ".", ",");
 
 	$num_decimal = count($m_decimal);
 
-	// Asigno valor al nuevo array para que en caso de no ejecutarse el primer while, éste tenga valor.	
-	$total_decimal[] = array_pop($total);
-
-	$array_decimal[] = 0;
-	unset ($array_decimal[0]);
-
-	while($total_decimal[$cont-1] != 0 ){
+	// Asigno valor al nuevo array para que en caso de no ejecutarse el primer while, éste tenga valor dentro de un formato.
+	$total_decimal[] = number_format(array_pop($total), 2, ".", ",");	
+	
+	$array_decimal[] = number_format(0, 2, ".", ",");
+	unset ($array_decimal[0]);	// Elimino esa posicion para guardar el dato necesario.
+	
+	while($total_decimal[$cont] != 0){
 
 		for($j = 0; $j < $num_decimal; $j++){
 
-			if($total_decimal[$cont-1] > $m_decimal[$j]){
+			if($total_decimal[$cont] > $m_decimal[$j]){
 
-				$total_decimal[] = $total_decimal[$cont-1] - $m_decimal[$j];
+				$total_decimal[] = $total_decimal[$cont] - $m_decimal[$j];
 				$array_decimal[] = $m_decimal[$j];
-
+								
 				break;
 
 			}
 
 
-			if($total_decimal[$cont-1] == $m_decimal[$j]){
+			if($total_decimal[$cont] == $m_decimal[$j]){
 
-				$total_decimal[] = $total_decimal[$cont-1] - $m_decimal[$j];
+				$total_decimal[] = $total_decimal[$cont] - $m_decimal[$j];
 				$array_decimal[] = $m_decimal[$j];
-
-
+				
 				break;
 			}
 		}
@@ -112,7 +113,9 @@
 
 	echo"<pre>";
 	print_r (array_count_values($array_entero));
-	print_r ($array_decimal);
+	print_r (array_count_values($array_decimal));
 	echo"<\pre>";
-
+	
+	// Tiene un pequeño problema y es que por defecto se deja un valor 0.001 que no soy capaz de controlar con los formatos.
+	
 ?>
